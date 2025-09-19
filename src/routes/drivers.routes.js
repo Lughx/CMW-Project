@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { getAgeWithName, getDrivers } from "../controller/drivers.controller.js";
+import { getDriverWithName, getDrivers } from "../controller/drivers.controller.js";
 
 const router = Router()
 
 router.get("/drivers", getDrivers)
-router.get("/driver/age/:id", getAgeWithName)
+router.get("/getDriverByName/:id", getDriverWithName)
 
 export default router

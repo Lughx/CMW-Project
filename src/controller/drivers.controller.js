@@ -1,49 +1,37 @@
-import { calculateAge } from "../utils/age.util.js"
+import { getDriverInfo } from "../utils/driver.util.js";
+import { getFunFact } from "../utils/funFact.util.js";
 
-export const getAgeWithName = async ({ params }, res) => {
-    try {
-        const resFetch = await fetch(`${process.env.API_URI}/drivers/search?q=${params.id}`)
-        const result = await resFetch.json()
+export const getDriverWithName = async ({ params }, res) => {
 
-        console.log(result)
+  try {
 
-        if (result.total === 0) return res.status(400).json({"Error": "Driver don't found"})
-
-        let drivers = []
-
-        for (let i = 0; i < result.drivers.length; i++) {
-            const element = result.drivers[i];
-            const ageSplited = element.birthday.split("/")
-    
-            const age = calculateAge(`${ageSplited[2]}-${ageSplited[1]}-${ageSplited[0]}`)
-
-            drivers.push({
-                driverId: element.driverId,
-                name: element.name,
-                surname: element.surname,
-                age: age
-            })
-            
-        }
-
-    
-        res.json(drivers)
-
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({"Error": "Unable to get data"})
+    const driverInfo = await getDriverInfo(params.id);
+    if (!driverInfo) res.status(400).json({ Error: "Driver don't found" });
+  
+    const fact = await getFunFact(driverInfo[0].dob)
+  
+    const result = {
+      driverId: driverInfo[0].driverId,
+      name: driverInfo[0].name,
+      date: driverInfo[0].dob,
+      funFact: fact.text
     }
-}
+  
+    res.json(result)
+  } catch(e) {
+    console.log(e)
+    res.status(400).send("Error")
+  }
+};
 
 export const getDrivers = async (req, res) => {
-    try {
-        const resFetch = await fetch(process.env.API_URI+"/drivers")
-    
-        const result = await resFetch.json()
-    
-        res.json(result)
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({"Error": "Unable to get data"})
-    }
-}
+  try {
+    const resFetch = await fetch(process.env.API_URI + "/drivers");
+    const result = await resFetch.json();
+
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ Error: "Unable to get data" });
+  }
+};
