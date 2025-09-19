@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "nodemon ./src/index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "express": "^5.1.0",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.2",
+    "nodemon": "^3.1.10"
+  }
+}
