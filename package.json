@@ -1,0 +1,29 @@
+{
+  "name": "CMW-Project",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon ./src/index.js"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.1.0",
+    "morgan": "^1.10.1",
+    "prettier": "^3.6.2"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.2",
+    "nodemon": "^3.1.10",
+    "pkg": "^5.8.1"
+  },
+  "bin": "src/index.js",
+  "pkg": {
+    "targets": [
+      "node18-linuxstatic-arm64"
+    ],
+    "assets": [".env", "src/**/*"],
+    "outputPath": "dist",
+    "scripts": [
+    "src/**/*"
+  ]
+  }
+}
